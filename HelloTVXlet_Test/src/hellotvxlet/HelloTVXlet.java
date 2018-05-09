@@ -12,18 +12,7 @@ import org.havi.ui.HVisible;
 
 public class HelloTVXlet implements Xlet {
 
-    public void destroyXlet(boolean unconditional) throws XletStateChangeException {
-     
-    }
-    private String whoseTurn = "X";
-    private void determineWhoseTurn() {
-       if(whoseTurn.equalsIgnoreCase("X")){
-           whoseTurn = "O";
-           
-       }else{
-           whoseTurn = "X";
-       }
-    }
+    
     public void initXlet(XletContext ctx) throws XletStateChangeException {
         HScene scene=HSceneFactory.getInstance().getDefaultHScene();
         // SCHERM = 720 x 576
@@ -102,15 +91,26 @@ public class HelloTVXlet implements Xlet {
         scene.validate();
         scene.setVisible(true);
     }
-
+    public void startXlet() throws XletStateChangeException {
+     
+    }
     public void pauseXlet() {
        
     }
 
-    public void startXlet() throws XletStateChangeException {
+    
+    public void destroyXlet(boolean unconditional) throws XletStateChangeException {
      
     }
-
+    private String whoseTurn = "X";
+    private void determineWhoseTurn() {
+       if(whoseTurn.equalsIgnoreCase("X")){
+           whoseTurn = "O";
+           
+       }else{
+           whoseTurn = "X";
+       }
+    }
 
   
 }

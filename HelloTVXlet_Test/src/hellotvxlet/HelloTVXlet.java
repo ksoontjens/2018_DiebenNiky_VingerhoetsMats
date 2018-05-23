@@ -10,7 +10,7 @@ import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import org.havi.ui.event.*;
-import java.util.concurrent.TimeUnit;
+
 
 
 
@@ -25,29 +25,75 @@ public class HelloTVXlet implements Xlet, HActionListener {
     public String whoseTurn = "";    
     public Timer resetTimer = new Timer();
     
+    public String playerOne = "Player One";
+    public String playerTwo = "Player Two";
+    public int playerOneCount = 0;
+    public int playerTwoCount = 0;
+    
+    
+    public boolean playable1 = true;
+    public boolean playable2 = true;
+    public boolean playable3 = true;
+    public boolean playable4 = true;
+    public boolean playable5 = true;
+    public boolean playable6 = true;
+    public boolean playable7 = true;
+    public boolean playable8 = true;
+    public boolean playable9 = true;
+    
+    
+       
     public String determineWhosTurn (){
         if(whoseTurn.equalsIgnoreCase("X")){
-            whoseTurn = "O";                
+            whoseTurn = "O";               
             return whoseTurn;
         }
         else{
-            whoseTurn = "X";            
+            whoseTurn = "X";              
             return whoseTurn;
         }                
     }
     
     public void xWins(){
-        titel.setTextContent("Player X Wins!", HState.NORMAL_STATE);        
-        resetGame();
+        titel.setTextContent("Player X Wins!", HState.NORMAL_STATE);  
+        playerOneCount++;        
+        resetGame();             
     }
     
     public void oWins(){
         titel.setTextContent("Player Y Wins!", HState.NORMAL_STATE);
-        resetGame();
+        playerTwoCount++;        
+        resetGame();             
+    } 
+    
+    public void tieGame(){
+        String one = knop1.getTextContent(HState.NORMAL_STATE); 
+        String two = knop2.getTextContent(HState.NORMAL_STATE);
+        String three = knop3.getTextContent(HState.NORMAL_STATE);
+        String four = knop4.getTextContent(HState.NORMAL_STATE);
+        String five = knop5.getTextContent(HState.NORMAL_STATE);
+        String six = knop6.getTextContent(HState.NORMAL_STATE);
+        String seven = knop7.getTextContent(HState.NORMAL_STATE);
+        String eight = knop8.getTextContent(HState.NORMAL_STATE);
+        String nine = knop9.getTextContent(HState.NORMAL_STATE);
+        
+        if(one != "" && two != "" && three != "" && four != "" 
+                && five != "" && six != "" && seven != "" && eight != "" && nine != ""){
+            titel.setTextContent("Game is a tie!", HState.NORMAL_STATE);  
+            resetGame();
+        };
     }
     
-    private void resetGame(){
+    public void setScores(){
+        ScoreX.setTextContent("Player X: "+String.valueOf(playerOneCount), HState.NORMAL_STATE);
+        ScoreY.setTextContent("Player Y: "+String.valueOf(playerTwoCount), HState.NORMAL_STATE);        
         
+        
+        
+        
+    }
+            
+    public void resetGame(){        
         knop1.setTextContent("", HState.NORMAL_STATE);
         knop2.setTextContent("", HState.NORMAL_STATE);
         knop3.setTextContent("", HState.NORMAL_STATE);
@@ -58,6 +104,17 @@ public class HelloTVXlet implements Xlet, HActionListener {
         knop8.setTextContent("", HState.NORMAL_STATE);
         knop9.setTextContent("", HState.NORMAL_STATE);
         
+        playable1 = true;
+        playable2 = true;
+        playable3 = true;
+        playable4 = true;
+        playable5 = true;
+        playable6 = true;
+        playable7 = true;
+        playable8 = true;
+        playable9 = true;        
+        
+        setScores();        
     }
             
     public void determineIfWin(){
@@ -105,29 +162,33 @@ public class HelloTVXlet implements Xlet, HActionListener {
         if(four == "O" && five == "O" && six == "O"){           
             oWins();
         }          
-        if(seven == "0" && eight == "0" && nine == "0"){           
+        if(seven == "O" && eight == "O" && nine == "O"){           
             oWins();
         }          
-        if(one == "0" && four == "0" && seven == "0"){           
+        if(one == "O" && four == "O" && seven == "O"){           
             oWins();
         }          
-        if(two == "0" && five == "0" && eight == "0"){           
+        if(two == "O" && five == "O" && eight == "O"){           
             oWins();
         }          
-        if(three == "0" && six == "0" && nine == "0"){           
+        if(three == "O" && six == "O" && nine == "O"){           
             oWins();
         }          
-        if(seven == "0" && five == "0" && three == "0"){           
+        if(seven == "O" && five == "O" && three == "O"){           
             oWins();
         }        
-        if(one == "0" && five == "0" && nine == "0"){           
+        if(one == "O" && five == "O" && nine == "O"){           
             oWins();
-        }          
+        }      
+        tieGame();
     }
         
     public void actionPerformed (ActionEvent e){
-        System.out.println(e.getActionCommand());                
+        System.out.println(e.getActionCommand());  
         
+        
+        
+        if(playable1){
         if(e.getActionCommand()== "knop1_actioned"){
             knop1.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
@@ -136,9 +197,13 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop1.setForeground(Color.blue);
             }
+            playable1 = false;
             determineIfWin();
+            
         }
-        else if(e.getActionCommand()== "knop2_actioned"){
+        }
+        if(playable2){
+        if(e.getActionCommand()== "knop2_actioned"){
             knop2.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop2.setForeground(Color.red);
@@ -146,9 +211,13 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop2.setForeground(Color.blue);
             }
+            playable2 = false;
             determineIfWin();
+            
         }
-        else if(e.getActionCommand()== "knop3_actioned"){
+        }
+        if(playable3){
+        if(e.getActionCommand()== "knop3_actioned"){
             knop3.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop3.setForeground(Color.red);
@@ -156,9 +225,13 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop3.setForeground(Color.blue);
             }
+            playable3 = false;
             determineIfWin();
+            
         }
-        else if(e.getActionCommand()== "knop4_actioned"){
+        }
+        if(playable4){
+        if(e.getActionCommand()== "knop4_actioned"){
             knop4.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop4.setForeground(Color.red);
@@ -166,9 +239,13 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop4.setForeground(Color.blue);
             }
+            playable4 = false;
             determineIfWin();
+            
         }
-        else if(e.getActionCommand()== "knop5_actioned"){
+        }
+        if(playable5){
+        if(e.getActionCommand()== "knop5_actioned"){
             knop5.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop5.setForeground(Color.red);
@@ -176,9 +253,13 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop5.setForeground(Color.blue);
             }
+            playable5 = false;
             determineIfWin();
+            
         }
-        else if(e.getActionCommand()== "knop6_actioned"){
+        }
+        if(playable6){
+        if(e.getActionCommand()== "knop6_actioned"){
             knop6.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop6.setForeground(Color.red);
@@ -186,9 +267,13 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop6.setForeground(Color.blue);
             }
+            playable6 = false;
             determineIfWin();
+            
         }
-        else if(e.getActionCommand()== "knop7_actioned"){
+        }
+        if(playable7){
+        if(e.getActionCommand()== "knop7_actioned"){
             knop7.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop7.setForeground(Color.red);
@@ -196,9 +281,12 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop7.setForeground(Color.blue);
             }
-            determineIfWin();
+            playable7 = false;
+            determineIfWin();            
         }
-        else if(e.getActionCommand()== "knop8_actioned"){
+        }
+        if(playable8){
+        if(e.getActionCommand()== "knop8_actioned"){
             knop8.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop8.setForeground(Color.red);
@@ -206,9 +294,12 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop8.setForeground(Color.blue);
             }
-            determineIfWin();
+            playable8 = false;
+            determineIfWin();            
         }
-        else if(e.getActionCommand()== "knop9_actioned"){
+        }
+        if(playable9){
+        if(e.getActionCommand()== "knop9_actioned"){
             knop9.setTextContent(determineWhosTurn(), HState.NORMAL_STATE);
             if(whoseTurn.equalsIgnoreCase("X")){
                 knop9.setForeground(Color.red);
@@ -216,9 +307,19 @@ public class HelloTVXlet implements Xlet, HActionListener {
             else{
                 knop9.setForeground(Color.blue);
             }
-            determineIfWin();
+            playable9 = false;
+            determineIfWin();            
         }
-        
+        }
+        //System.out.println(playable1); 
+        //System.out.println(playable2); 
+        //System.out.println(playable3); 
+        //System.out.println(playable4); 
+        //System.out.println(playable5); 
+        //System.out.println(playable6); 
+        //System.out.println(playable7);
+        //System.out.println(playable8);
+        //System.out.println(playable9);
         
     }
     
@@ -361,6 +462,8 @@ public class HelloTVXlet implements Xlet, HActionListener {
    
       knop1.requestFocus();     
       
+      setScores();
+      
     }    
     
     public void startXlet() throws XletStateChangeException {
@@ -380,5 +483,3 @@ public class HelloTVXlet implements Xlet, HActionListener {
     }
      
 }
-
-  
